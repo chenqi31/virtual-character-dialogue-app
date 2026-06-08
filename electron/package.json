@@ -9,7 +9,7 @@
     "build": "electron-vite build",
     "build:win": "electron-vite build && electron-builder --win nsis",
     "build:mac": "electron-vite build && electron-builder --mac dmg",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall:electron-builder": "electron-builder install-app-deps"
   },
   "devDependencies": {
     "@electron/rebuild": "^3.6.0",
