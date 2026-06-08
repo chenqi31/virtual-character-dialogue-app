@@ -1,0 +1,35 @@
+{
+  "name": "virtual-character-dialogue-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "虚拟人物对话桌面应用（Electron + Vite + Vue3 + NestJS + TypeORM + minimax）",
+  "workspaces": [
+    "server",
+    "web",
+    "electron",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n db,server,web,electron -c yellow,cyan,magenta,green \"npm run db:up\" \"npm run dev:server\" \"npm run dev:web\" \"npm run dev:electron\"",
+    "dev:web": "npm --workspace web run dev",
+    "dev:server": "npm --workspace server run start:dev",
+    "dev:electron": "npm --workspace electron run dev",
+    "db:up": "docker compose -f docker/docker-compose.yml --env-file docker/.env up -d mysql",
+    "db:down": "docker compose -f docker/docker-compose.yml down",
+    "db:reset": "docker compose -f docker/docker-compose.yml down -v",
+    "build:web": "npm --workspace web run build",
+    "build:server": "npm --workspace server run build",
+    "build:electron": "npm --workspace electron run build",
+    "build:win": "npm --workspace electron run build:win",
+    "build:mac": "npm --workspace electron run build:mac",
+    "migration:generate": "npm --workspace server run migration:generate",
+    "migration:run": "npm --workspace server run migration:run",
+    "migration:revert": "npm --workspace server run migration:revert",
+    "test": "npm --workspaces --if-present run test",
+    "lint": "npm --workspaces --if-present run lint"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.5"
+  }
+}

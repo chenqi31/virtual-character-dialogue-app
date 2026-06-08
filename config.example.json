@@ -1,0 +1,6 @@
+{
+  "apiKey": "sk-replace-me",
+  "baseUrl": "https://api.minimax.chat/v1",
+  "dbType": "sqlite",
+  "dbPath": "<userData>/app.db"
+}

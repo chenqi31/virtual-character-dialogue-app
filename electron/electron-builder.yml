@@ -1,0 +1,31 @@
+appId: com.virtualchat.app
+productName: VirtualCharacterDialogue
+directories:
+  buildResources: build
+  output: release
+files:
+  - "dist/**/*"
+  - "package.json"
+extraResources:
+  - from: "../web/dist"
+    to: "web"
+    filter: ["**/*"]
+  - from: "../server/dist"
+    to: "server"
+    filter: ["**/*"]
+  - from: "../shared/src"
+    to: "shared"
+    filter: ["**/*"]
+asar: true
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
