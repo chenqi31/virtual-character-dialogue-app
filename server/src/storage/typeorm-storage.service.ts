@@ -116,7 +116,7 @@ export class TypeOrmStorageService implements Storage {
     const a = await this.characterRepo.findOne({ where: { id: input.charAId } });
     const b = await this.characterRepo.findOne({ where: { id: input.charBId } });
     if (!a || !b) throw new NotFoundException('指定人物不存在');
-    if (a.storyId !== input.storyId || b.storyId !== input.storyId) {
+    if (a.storyId != input.storyId || b.storyId != input.storyId) {
       throw new ConflictException('人物与故事不匹配');
     }
     const session = this.sessionRepo.create({

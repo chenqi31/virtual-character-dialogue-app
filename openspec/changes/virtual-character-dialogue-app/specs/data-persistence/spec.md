@@ -4,7 +4,7 @@
 系统 SHALL 在 dev 环境使用 docker-compose 启动的 MySQL 8；在 prod（桌面端打包）环境使用 better-sqlite3 单文件。两种模式通过 `Storage` 抽象接口对外暴露一致 API。
 
 #### Scenario: dev 模式容器启动后数据可访问
-- **WHEN** `npm run db:up` 成功，MySQL 监听 127.0.0.1:3306
+- **WHEN** `npm run db:up` 成功，MySQL 监听 127.0.0.1:3307
 - **THEN** Nest 后端可通过 `@nestjs/typeorm` 注入的 `DataSource`（底层 `mysql2` 连接池）读写所有表
 
 #### Scenario: prod 模式 SQLite 文件可访问

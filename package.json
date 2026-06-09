@@ -13,6 +13,7 @@
     "dev": "concurrently -k -n db,server,web,electron -c yellow,cyan,magenta,green \"npm run db:up\" \"npm run dev:server\" \"npm run dev:web\" \"npm run dev:electron\"",
     "dev:web": "npm --workspace web run dev",
     "dev:server": "npm --workspace server run start:dev",
+    "dev:server:debug": "npm --workspace server run start:debug",
     "dev:electron": "npm --workspace electron run dev",
     "db:up": "docker compose -f docker/docker-compose.yml --env-file docker/.env up -d mysql",
     "db:down": "docker compose -f docker/docker-compose.yml down",

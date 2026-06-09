@@ -8,7 +8,7 @@
 
 ## 2. 数据库（双轨：dev=Docker MySQL，prod=SQLite）
 
-- [x] 2.1 编写 `docker/docker-compose.yml`：启动 `mysql:8.0` 服务，端口 3306:3306，named volume 挂载 `./data/mysql`，env_file 注入密码
+- [x] 2.1 编写 `docker/docker-compose.yml`：启动 `mysql:8.0` 服务，端口 3307:3307，named volume 挂载 `./data/mysql`，env_file 注入密码
 - [x] 2.2 编写 `docker/.env.example`：`MYSQL_ROOT_PASSWORD`、`MYSQL_DATABASE=virtual_chat`、`MYSQL_USER`、`MYSQL_PASSWORD`
 - [x] 2.3 编写 `docker/mysql/conf.d/my.cnf`：`character-set-server=utf8mb4`、`collation-server=utf8mb4_unicode_ci`、`default-time-zone=+08:00`
 - [x] 2.4 用 TypeORM 实体生成首版 migration `001_init.ts`：`stories / characters / sessions / messages`（dev MySQL 用 InnoDB、utf8mb4、外键 `ON DELETE CASCADE`、`INDEX(session_id, id)`）

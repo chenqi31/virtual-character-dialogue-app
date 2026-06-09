@@ -1,3 +1,10 @@
+/*
+ * @Author: chenqi31 chenqi31@hikvision.com.cn
+ * @Date: 2026-06-08 19:21:36
+ * @LastEditors: chenqi31 chenqi31@hikvision.com.cn
+ * @LastEditTime: 2026-06-09 11:22:12
+ * @Description: 
+ */
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -32,7 +39,7 @@ import { Character, Message, Session, Story } from './entities';
         return {
           type: 'mysql' as const,
           host: config.get<string>('DB_HOST') || '127.0.0.1',
-          port: Number(config.get<string>('DB_PORT') ?? 3306),
+          port: Number(config.get<string>('DB_PORT') ?? 3307),
           username: config.get<string>('DB_USER') || 'virtual_chat',
           password: config.get<string>('DB_PASSWORD') || 'virtual_chat',
           database: config.get<string>('DB_NAME') || 'virtual_chat',

@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Storage } from '../storage/storage.interface';
+import { STORAGE, Storage } from '../storage/storage.interface';
 import { LLM_CLIENT, LlmClient } from '../llm/llm.types';
 import { PromptBuilder } from '../llm/prompt.builder';
 import { CharacterTarget, SessionState } from '../database/entities';
@@ -25,7 +25,7 @@ export class SandboxService {
   private static readonly INTERVAL_MS = 400; // 防止刷屏
 
   constructor(
-    @Inject(Storage) private readonly storage: Storage,
+    @Inject(STORAGE) private readonly storage: Storage,
     @Inject(LLM_CLIENT) private readonly llm: LlmClient,
     private readonly promptBuilder: PromptBuilder,
     private readonly events: EventEmitter2,
@@ -59,7 +59,7 @@ export class SandboxService {
       case 'resume': {
         await this.storage.updateSessionState(session.id, 'running');
         // 从 nextSpeaker 恢复；若空则默认 A
-        const target: CharacterTarget = (session.nextSpeaker as CharacterTarget) ?? 'a';
+        const target: CharacterTarget = session.nextSpeaker === 2 ? 'b' : 'a';
         this.events.emit(`sandbox.${target.toUpperCase()}.replied`, {
           sessionId: session.id,
           target,

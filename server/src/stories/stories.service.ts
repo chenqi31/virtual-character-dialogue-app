@@ -1,11 +1,11 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Storage } from '../storage/storage.interface';
+import { STORAGE, Storage } from '../storage/storage.interface';
 import { CreateStoryDto, UpdateStoryDto } from './stories.dto';
 import { Story } from '../database/entities';
 
 @Injectable()
 export class StoriesService {
-  constructor(@Inject(Storage) private readonly storage: Storage) {}
+  constructor(@Inject(STORAGE) private readonly storage: Storage) {}
 
   async create(input: CreateStoryDto): Promise<Story> {
     if (!input.title?.trim()) {

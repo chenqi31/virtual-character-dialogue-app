@@ -1,11 +1,11 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Storage } from '../storage/storage.interface';
+import { STORAGE, Storage } from '../storage/storage.interface';
 import { CreateCharacterDto, UpdateCharacterDto } from './characters.dto';
 import { Character } from '../database/entities';
 
 @Injectable()
 export class CharactersService {
-  constructor(@Inject(Storage) private readonly storage: Storage) {}
+  constructor(@Inject(STORAGE) private readonly storage: Storage) {}
 
   async create(input: CreateCharacterDto): Promise<Character> {
     return this.storage.createCharacter(input);

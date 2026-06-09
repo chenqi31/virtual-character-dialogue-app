@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { encode } from 'gpt-tokenizer';
 import { Character, Message, Story } from '../database/entities';
-import { Storage } from '../storage/storage.interface';
+import { STORAGE, Storage } from '../storage/storage.interface';
 import { LlmChatParams, LlmMessageInput } from './llm.types';
 
 export interface BuildPromptInput {
@@ -27,7 +27,7 @@ export class PromptBuilder {
   private static readonly SYSTEM_RESERVED = 1500; // 给系统提示词预留
   private static readonly ANCHOR_ROUNDS = 5;
 
-  constructor(@Inject(Storage) private readonly storage: Storage) {}
+  constructor(@Inject(STORAGE) private readonly storage: Storage) {}
 
   build(input: BuildPromptInput): LlmChatParams {
     const system = this.composeSystem(input);
@@ -62,15 +62,20 @@ export class PromptBuilder {
       ? [{ role: 'system', content: `【事件注入】${injectEvent}` }]
       : [];
 
+    // 历史为空时，插入一条 user 消息作为对话触发（MiniMax 等部分 API 不接受仅有 system 的请求）
+    if (ordered.length === 0 && systemInject.length === 0) {
+      return [{ role: 'user', content: '请开始对话。' }];
+    }
+
     // 末段：最近 ANCHOR_ROUNDS 轮（按 char_a/char_b/user 成对划分）恒保留
     const tail = this.takeTailRounds(ordered, PromptBuilder.ANCHOR_ROUNDS);
 
     // 中段：从远到近累积，遇超预算停止
-    const middle: Message[] = [];
+    let middle: Message[] = [];
     const headOrdered = ordered.slice(0, ordered.length - tail.length);
     for (let i = headOrdered.length - 1; i >= 0; i--) {
       const candidate = [...headOrdered.slice(0, i + 1), ...tail];
-      const tokens = this.countTokens([...systemInject, ...this.toLlm([...candidate, ...tail])]);
+      const tokens = this.countTokens([...systemInject, ...this.toLlm(candidate)]);
       if (tokens <= budget) {
         middle = headOrdered.slice(0, i + 1);
         break;

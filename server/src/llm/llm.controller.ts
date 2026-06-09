@@ -3,7 +3,7 @@ import { Observable, Subject, from, of } from 'rxjs';
 import { catchError, finalize, map, mergeMap } from 'rxjs/operators';
 import { IsIn, IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Storage } from '../storage/storage.interface';
+import { STORAGE, Storage } from '../storage/storage.interface';
 import { LLM_CLIENT, LlmClient } from './llm.types';
 import { PromptBuilder } from './prompt.builder';
 import { CharacterTarget } from '../database/entities';
@@ -40,7 +40,7 @@ export class LlmController {
   constructor(
     @Inject(LLM_CLIENT) private readonly llm: LlmClient,
     private readonly promptBuilder: PromptBuilder,
-    @Inject(Storage) private readonly storage: Storage,
+    @Inject(STORAGE) private readonly storage: Storage,
   ) {}
 
   @Sse('chat')

@@ -62,7 +62,7 @@ npm run build:mac      # 打包 macOS dmg
 
 | 模式 | 数据库 | 启动方式 | 说明 |
 |---|---|---|---|
-| dev  | Docker MySQL（3306） | `npm run dev` 顺次拉起 db → server → web → electron | 开发者本机需 Docker |
+| dev  | Docker MySQL（3307） | `npm run dev` 顺次拉起 db → server → web → electron | 开发者本机需 Docker |
 | prod | better-sqlite3 单文件 | Electron 启动时由 main 进程 fork Nest → `/health` 200 → loadURL | 终用户**无需**安装 Docker |
 
 ## NestJS 启动注意事项

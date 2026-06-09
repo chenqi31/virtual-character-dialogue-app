@@ -50,7 +50,7 @@ class MigrationRunner implements OnApplicationBootstrap {
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env', '../../.env'] }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env', '../.env'] }),
     EventEmitterModule.forRoot({ global: true, wildcard: true }),
     ThrottlerModule.forRoot([
       { name: 'default', ttl: 60_000, limit: 60 },

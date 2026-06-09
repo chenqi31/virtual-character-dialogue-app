@@ -14,9 +14,7 @@ data/
 *.sqlite3
 
 # env
-.env
 .env.local
-docker/.env
 
 # logs
 *.log
@@ -33,3 +31,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# electron-vite auto-generated config
+electron/electron.vite.config.*.mjs

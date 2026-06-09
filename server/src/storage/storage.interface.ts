@@ -61,6 +61,8 @@ export interface ListMessagesQuery {
   beforeId?: number;
 }
 
+export const STORAGE = Symbol('STORAGE');
+
 export interface Storage {
   // stories
   createStory(input: CreateStoryInput): Promise<Story>;

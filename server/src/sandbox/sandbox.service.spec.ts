@@ -31,7 +31,7 @@ function makeStorageMock(over: Partial<{ session: Session; story: Story; self: C
     createdAt: new Date(), updatedAt: new Date(),
   } as Character);
   const messages = over.messages ?? [];
-  return {
+  const storage: any = {
     getSession: jest.fn().mockResolvedValue(session),
     getStory: jest.fn().mockResolvedValue(story),
     getCharacter: jest.fn().mockImplementation((id: number) =>
@@ -39,15 +39,20 @@ function makeStorageMock(over: Partial<{ session: Session; story: Story; self: C
     ),
     listMessages: jest.fn().mockResolvedValue(messages),
     appendMessage: jest.fn().mockResolvedValue(undefined),
-    incrementRound: jest.fn().mockImplementation(async () => {
-      session.currentRound += 1;
-      return session;
-    }),
     updateSessionState: jest.fn().mockImplementation(async (id: number, state: any) => {
       session.state = state;
       return session;
     }),
-  } as any;
+  };
+  storage.incrementRound = jest.fn().mockImplementation(async (id: number) => {
+    session.currentRound += 1;
+    if (session.currentRound >= session.maxRounds) {
+      session.state = 'ended';
+      storage.updateSessionState(id, 'ended');
+    }
+    return session;
+  });
+  return storage;
 }
 
 function makeLlmMock(chunks: string[]) {

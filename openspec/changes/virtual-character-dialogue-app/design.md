@@ -8,7 +8,7 @@
 - 桌面壳：Electron（main 进程负责窗口/菜单/本地 IO；renderer 进程承载 Vue 应用；preload 暴露受限 IPC）。
 - 大模型：minimax 接口（OpenAI 兼容 chat completions 风格），后端统一代理。
 - 数据：**双轨方案**。dev 环境 = Docker MySQL 8（`mysql2` + TypeORM 或 Knex + `@nestjs/typeorm`）；prod 环境（打包后的桌面端）= `better-sqlite3` 单文件（零安装、零依赖）。后端通过 `Storage` 抽象接口屏蔽差异。
-- 部署目标：dev 时 MySQL 监听 `127.0.0.1:3306`、Nest 监听 `127.0.0.1:7001`、Electron 加载 `http://localhost:5173`；prod 时 Electron 启动本地 Nest（prod 走 SQLite）+ 加载 `dist/index.html`，**不再依赖 Docker**。
+- 部署目标：dev 时 MySQL 监听 `127.0.0.1:3307`、Nest 监听 `127.0.0.1:7001`、Electron 加载 `http://localhost:5173`；prod 时 Electron 启动本地 Nest（prod 走 SQLite）+ 加载 `dist/index.html`，**不再依赖 Docker**。
 
 利益相关方：终端用户（自己玩故事）、后续开发者（维护/扩展）。
 

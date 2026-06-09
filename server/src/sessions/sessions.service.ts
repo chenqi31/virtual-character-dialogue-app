@@ -1,11 +1,11 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Storage } from '../storage/storage.interface';
+import { STORAGE, Storage } from '../storage/storage.interface';
 import { CreateSessionDto } from './sessions.dto';
 import { Session, SessionState } from '../database/entities';
 
 @Injectable()
 export class SessionsService {
-  constructor(@Inject(Storage) private readonly storage: Storage) {}
+  constructor(@Inject(STORAGE) private readonly storage: Storage) {}
 
   create(input: CreateSessionDto): Promise<Session> {
     return this.storage.createSession(input);
